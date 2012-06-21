@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="file:/home/xad/.eclipse/org.eclipse.platform_3.7.0_155965261/plugins/br.ufsc.edugraf.dix_2010.9.2/transformacao/dix.xml"?>
+<página nome="Regras">
+
+<etiqueta nome="Jogar" esquerda="50" topo="50" largura="500" altura="300">
+	Regras do jogo:
+	\n
+	
+1) Nave se movimenta de acordo com as teclas direcionais.
+\n
+1.1) Nave se movimenta apenas dentro dos limites do espaço.
+\n
+2)Existe um Alien numa posição padrão da tela que se movimenta em direção oeste.
+\n
+2.1)Quando o mesmo chegar no final do percurso, ele voltará para o começo e com uma posição 'topo' aleatória (dentro dos limites 
+do espaço e com a 'esquerda' padrão).
+\n
+3)Caso o retângulo do Alien estiver na mesma posição que o da Nave, eles irão se colidir. 
+\n
+3.1) No momento da colisão, a nave 'explode' e o jogo acaba.
+	
+	</etiqueta>
+
+</página>
