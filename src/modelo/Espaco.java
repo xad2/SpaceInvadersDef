@@ -16,6 +16,7 @@ public class Espaco {
 		return formato.contem(r);
 	}
 	
+	
 
 	
 }

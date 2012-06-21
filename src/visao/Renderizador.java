@@ -9,7 +9,7 @@ import edugraf.jadix.fachada.Pichador;
 import edugraf.jadix.fachada.TiposDeComponentesDix;
 import edugraf.jadix.tiposPrimitivos.Coordenadas;
 
-public abstract class Renderizador  implements Observador {
+public abstract class Renderizador   {
 
 	protected PaginaDix pagina;
 	private Pichador pichador = new Pichador();
@@ -37,6 +37,11 @@ public abstract class Renderizador  implements Observador {
 		pichador.descansar(0.1);
 		return img;
 
+	}
+	
+	public Imagem criarTiro(Coordenadas coord, String nome){
+		Imagem img = criarImagem(nome, coord, "recursos/quartusii.png");
+		return img;
 	}
 
 	public void redesenhar(Imagem imagem, Coordenadas coordenadas) {

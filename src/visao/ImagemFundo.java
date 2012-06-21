@@ -17,11 +17,7 @@ public class ImagemFundo extends Renderizador {
 		fundo.fixarProfundidade(0);
 	}
 
-	@Override
-	public void atualizar(String codigo) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 	
 

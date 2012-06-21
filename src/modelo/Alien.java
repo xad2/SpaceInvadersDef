@@ -1,18 +1,15 @@
 package modelo;
 
 import modelo.geometria.Retangulo;
-import modelo.util.Observavel;
-import modelo.util.TratadorDeInteiros;
 import static modelo.constantes.Valores.*;
 
-public class Alien extends Observavel {
+public class Alien extends RetanguloMovel {
 
 	private final int PASSO = 1;
 
-	private RetanguloMovel retangulo;
+	public Alien(Espaco espaco, Retangulo retangulo) {
 
-	public Alien(RetanguloMovel retangulo) {
-
+		this.espaco = espaco;
 		this.retangulo = retangulo;
 
 	}
@@ -33,7 +30,7 @@ public class Alien extends Observavel {
 
 	public boolean andarNaHorizontal() {
 
-		boolean b = retangulo.moverX(-PASSO);
+		boolean b = moverX(-PASSO);
 		notificarObservadores(toString());
 		return b;
 	}

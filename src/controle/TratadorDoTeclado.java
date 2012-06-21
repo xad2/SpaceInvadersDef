@@ -1,5 +1,7 @@
 package controle;
 
+import javax.swing.JOptionPane;
+
 import modelo.Fachada;
 import edugraf.jadix.eventos.EventoDeTeclado;
 import edugraf.jadix.fachada.ComponenteDix;

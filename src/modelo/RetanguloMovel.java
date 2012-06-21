@@ -1,42 +1,35 @@
 package modelo;
 
-import java.awt.Dimension;
-import java.awt.Point;
-
 import modelo.geometria.Retangulo;
+import modelo.util.Observavel;
 
-public class RetanguloMovel extends Retangulo implements
-		TipoMovimentavel {
+public abstract class RetanguloMovel extends Observavel implements TipoMovimentavel {
 
-	private Espaco espaco;
+	protected Retangulo retangulo;
+	protected Espaco espaco;
 
-	public RetanguloMovel(Espaco espaco, Point p, Dimension d) {
-		super(p, d);
-		this.espaco = espaco;
-	}
 
 	@Override
 	public boolean moverX(int passo) {
 
-		RetanguloMovel r = (RetanguloMovel) this.clone();
-		
+		Retangulo r = (Retangulo) retangulo.clone();
+
 		r.x += passo;
-		if(espaco.contem(r)){
-			this.x += passo;
+		if (espaco.contem(r)) {
+			retangulo.x += passo;
 			return true;
 		}
 		return false;
-		
 
 	}
 
 	public boolean moverY(int passo) {
 
-		RetanguloMovel r = (RetanguloMovel) this.clone();
-		
+		Retangulo r = (Retangulo) retangulo.clone();
+
 		r.y += passo;
-		if(espaco.contem(r)){
-			this.y += passo;
+		if (espaco.contem(r)) {
+			retangulo.y += passo;
 			return true;
 		}
 		return false;

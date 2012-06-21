@@ -1,17 +1,14 @@
 package modelo;
 
-import static modelo.constantes.Valores.POSICAOX_INICIAL_ALIEN;
 import modelo.geometria.Retangulo;
-import modelo.util.Observavel;
 import modelo.util.TratadorDeInteiros;
 
-public class Asteroide extends Observavel {
+public class Asteroide extends RetanguloMovel {
 
 	private final int PASSO = 1;
 
-	private RetanguloMovel retangulo;
-
-	public Asteroide(RetanguloMovel retangulo) {
+	public Asteroide(Espaco espaco, Retangulo retangulo) {
+		this.espaco = espaco;
 		this.retangulo = retangulo;
 	}
 
@@ -31,7 +28,7 @@ public class Asteroide extends Observavel {
 
 	public boolean andarNaVertical() {
 
-		boolean b = retangulo.moverY(PASSO);
+		boolean b = moverY( PASSO);
 		notificarObservadores(toString());
 		return b;
 	}

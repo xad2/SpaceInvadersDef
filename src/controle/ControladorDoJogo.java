@@ -1,100 +1,71 @@
 package controle;
 
-import static modelo.constantes.Valores.*;
-
-import java.awt.Dimension;
-import java.awt.Point;
-import java.util.ArrayList;
-
 import modelo.Alien;
 import modelo.Asteroide;
-import modelo.Espaco;
 import modelo.Fachada;
+import modelo.Jogo;
 import modelo.Nave;
-import modelo.RetanguloMovel;
-import modelo.geometria.Retangulo;
-import modelo.util.TratadorDeInteiros;
+import modelo.PontosDimensoes;
 import visao.ImagemFundo;
-import visao.ImagemRetangularMovel;
+import visao.ImagemRetangular;
 import edugraf.jadix.fachada.PaginaDix;
-import edugraf.jadix.tiposPrimitivos.Coordenadas;
 
 public class ControladorDoJogo {
 
-	private Nave nave;
-	private Alien alien;
-	private Asteroide asteroide;
-	
+	private Jogo jogo;
+	private PontosDimensoes pd = new PontosDimensoes();
+	protected PaginaDix pagina;
 
-	public ControladorDoJogo(PaginaDix pagina) {
+	private static final long TICKS_PER_SECOND = 50;
+	private static final long SKIP_TICKS = 1000 / TICKS_PER_SECOND;
+	private static final long MAX_FRAMESKIP = 5;
+	private long nextGameTick = System.currentTimeMillis();
 
-		
-		Retangulo rEspaco = new Retangulo(new Dimension(500, 500));
-		Espaco espaco = new Espaco(rEspaco);
+	public ControladorDoJogo(Jogo jogo, PaginaDix pagina) {
 
+		this.pagina = pagina;
+		this.jogo = jogo;
 
-		Point pNave = new Point(POSICAOX_INICIAL_NAVE.valor(),
-				POSICAOY_INICIAL_NAVE.valor());
-		Point pAlien = new Point(POSICAOX_INICIAL_ALIEN.valor(),
-				POSICAOY_INICIAL_ALIEN.aleatoria(465));
-		Point pAsteroide = new Point(POSICAOX_INICIAL_ASTEROIDE.aleatoria(465),
-				POSICAOY_INICIAL_ASTEROIDE.valor());
-		Dimension dNave = new Dimension(LARGURA_NAVE.valor(),
-				ALTURA_NAVE.valor());
-		Dimension dAlien = new Dimension(LARGURA_ALIEN.valor(),
-				ALTURA_ALIEN.valor());
-		Dimension dAsteroide = new Dimension(LARGURA_ASTEROIDE.valor(),
-				ALTURA_ASTEROIDE.valor());
-
-		RetanguloMovel retNave = new RetanguloMovel(espaco, pNave, dNave);
-		RetanguloMovel retAlien = new RetanguloMovel(espaco, pAlien, dAlien);
-		RetanguloMovel retAsteroide = new RetanguloMovel(espaco, pAsteroide,
-				dAsteroide);
-
-		this.asteroide = new Asteroide(retAsteroide);
-		this.alien = new Alien(retAlien);
-		this.nave = new Nave(retNave);
-
+		Asteroide asteroide = jogo.asteroide();
+		Nave nave = jogo.nave();
+		Alien alien = jogo.alien();
 		new ImagemFundo(pagina, "recursos/square.jpg");
 
-		ImagemRetangularMovel iAsteroide = new ImagemRetangularMovel(pagina,
-				pAsteroide, "recursos/squareAlien.jpg");
+		ImagemRetangular iAsteroide = new ImagemRetangular(pagina,
+				pd.getpAsteroide(), "recursos/squareAlien.jpg");
+
 		asteroide.adicionarObservador(iAsteroide);
 
-		ImagemRetangularMovel iNave = new ImagemRetangularMovel(pagina, pNave,
+		ImagemRetangular iNave = new ImagemRetangular(pagina, pd.getpNave(),
 				"recursos/sm_square.gif");
 		nave.adicionarObservador(iNave);
+
 		new ControladorDaNave(nave, iNave);
 
-		ImagemRetangularMovel iAlien = new ImagemRetangularMovel(pagina,
-				pAlien, "recursos/alien.gif");
+		ImagemRetangular iAlien = new ImagemRetangular(pagina, pd.getpAlien(),
+				"recursos/alien.gif");
 		alien.adicionarObservador(iAlien);
 
 		Fachada fachada = new Fachada(nave);
 		new TratadorDoTeclado(pagina, fachada);
+
 	}
 
-	public int receberTick(int tick) {
+	public void enviarTick() {
 
-		boolean alienAndou = alien.andarNaHorizontal();
-		boolean asteroideAndou = asteroide.andarNaVertical();
+		int loops = 0;
 
-		if (alienAndou == false) {
-			alien.resetarPosicaoY();
+		while (System.currentTimeMillis() > nextGameTick
+				&& loops < MAX_FRAMESKIP) {
+
+			jogo.receberTick();
+
+			nextGameTick += SKIP_TICKS;
+			loops++;
 		}
 
-		if (asteroideAndou == false) {
-			asteroide.resetarPosicaoX();
-		}
-
-		if (nave.intersecciona(alien.retangulo())
-				|| nave.intersecciona(asteroide.retangulo())) {
-			nave.explodir();
-			return -1;
-		}
-
-		tick++;
-		return tick;
 	}
+
+	
 
 }
