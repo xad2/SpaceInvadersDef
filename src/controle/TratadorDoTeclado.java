@@ -37,6 +37,9 @@ public class TratadorDoTeclado extends TratadorDixAbstrato {
 				fachada.moverNaveNaVertical(1);
 			
 			
+			if(tecla == 32)
+				fachada.atirarComANave();
+			
 				
 
 		}

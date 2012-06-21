@@ -14,7 +14,6 @@ public class ImagemRetangular extends Renderizador implements Observador {
 
 	private Imagem img;
 	private static int n = 0;
-	
 
 	public ImagemRetangular(PaginaDix pagina, Point p, String caminho) {
 		super(pagina);
@@ -38,8 +37,6 @@ public class ImagemRetangular extends Renderizador implements Observador {
 		int x = Integer.parseInt(a);
 		String b = valores[1];
 		int y = Integer.parseInt(b);
-		
-
 
 		redesenhar(img, new Coordenadas(x, y));
 	}

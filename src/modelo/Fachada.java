@@ -19,7 +19,9 @@ public class Fachada {
 		
 	}
 
-	
+	public void atirarComANave(){
+		nave.atirar();
+	}
 	
 	
 

@@ -3,12 +3,14 @@ package modelo;
 import static modelo.Estado.COLIDIU;
 import static modelo.Estado.*;
 
+import java.awt.Dimension;
+import java.awt.Point;
 
 import modelo.geometria.Retangulo;
 
-public class Nave extends RetanguloMovel {
+public class Nave extends RetanguloMovel implements TipoAtirador {
 
-	private final int PASSO = 25;
+	private final int PASSO = 15;
 
 	private Estado estado = VIVO;
 
@@ -49,5 +51,11 @@ public class Nave extends RetanguloMovel {
 		notificarObservadores(toString());
 	}
 
+	@Override
+	public void atirar() {
+
+		new Tiro(espaco, new Retangulo(new Point(retangulo.x + 30,
+				retangulo.y + 15), new Dimension(5, 2)));
+	}
 
 }
