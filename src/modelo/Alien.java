@@ -3,7 +3,7 @@ package modelo;
 import modelo.geometria.Retangulo;
 import modelo.util.Observavel;
 import modelo.util.TratadorDeInteiros;
-import static modelo.Posicoes.*;
+import static modelo.constantes.Valores.*;
 
 public class Alien extends Observavel {
 

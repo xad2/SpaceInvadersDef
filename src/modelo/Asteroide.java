@@ -1,6 +1,6 @@
 package modelo;
 
-import static modelo.Posicoes.POSICAOX_INICIAL_ALIEN;
+import static modelo.constantes.Valores.POSICAOX_INICIAL_ALIEN;
 import modelo.geometria.Retangulo;
 import modelo.util.Observavel;
 import modelo.util.TratadorDeInteiros;

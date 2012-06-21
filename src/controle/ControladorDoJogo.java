@@ -1,6 +1,6 @@
 package controle;
 
-import static modelo.Posicoes.*;
+import static modelo.constantes.Valores.*;
 
 import java.awt.Dimension;
 import java.awt.Point;
