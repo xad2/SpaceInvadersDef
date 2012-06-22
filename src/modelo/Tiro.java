@@ -1,11 +1,13 @@
 package modelo;
 
 import modelo.geometria.Retangulo;
+import static modelo.Estado.*;
 
 public class Tiro extends RetanguloMovel {
 
-	private final int passo = 1;
+	private final int passo = 100;
 	private ListaDeTiros tiros = new ListaDeTiros();
+	private Estado estado;
 
 	public Tiro(Espaco espaco, Retangulo r) {
 		this.espaco = espaco;
@@ -15,17 +17,33 @@ public class Tiro extends RetanguloMovel {
 	}
 
 	public void andar() {
-		moverX(1);
+		moverX(passo);
+		estado = VISIVEL;
+		notificarObservadores(toString());
 	}
 	
-	public boolean checarColisao(Retangulo r){
+	public boolean estaVisivel(){
+			
+		return estado.equals(VISIVEL) ? true : false;
+	}
+	
+	public boolean checarColisaoCom(Retangulo r){
 		
-		if(!espaco.contem(this.retangulo)){
+		Retangulo clone = (Retangulo) this.retangulo.clone();
+		
+		if(!espaco.contem(clone)){
+			estado = INVISIVEL;
 			return false;
 		}
-		if(!r.contem(this.retangulo)){
+		if(!r.contem(clone)){
+			estado = INVISIVEL;
 			return false;
 		}
 		return true;
 	}
+	
+	public String toString(){
+		return retangulo.x + "/" + retangulo.y + "/" + estado.toString();
+	}
+	
 }

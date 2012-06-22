@@ -2,7 +2,7 @@ package modelo;
 
 public enum Estado {
 
-	VIVO, COLIDIU;
+	VIVO, COLIDIU, VISIVEL, INVISIVEL;
 	
 	
 

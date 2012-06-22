@@ -8,7 +8,7 @@ import edugraf.jadix.fachada.ComponenteDix;
 import edugraf.jadix.fachada.PaginaDix;
 import edugraf.jadix.fachada.TratadorDixAbstrato;
 
-public class TratadorDoTeclado extends TratadorDixAbstrato {
+public class TratadorDoTeclado extends TratadorDixAbstrato  {
 
 	private Fachada fachada;
 
@@ -18,6 +18,8 @@ public class TratadorDoTeclado extends TratadorDixAbstrato {
 
 		ComponenteDix teclado = pag.criarProcuradorDeComponente("teclado");
 		teclado.adicionarTratadorDeEventos(this);
+		
+		
 
 	}
 

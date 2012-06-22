@@ -1,19 +1,25 @@
 package modelo;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import modelo.constantes.PontosDimensoes;
 import modelo.geometria.Retangulo;
 import modelo.util.Observavel;
 
 public class Jogo extends Observavel {
 
-	private static final int TAXA_DE_ATUALIZACAO_DE_TIROS = 3;
-	private int ultimaAtualizacaoDeTiro = 0;
+	
 	private PontosDimensoes pd = new PontosDimensoes();
 
 	private Asteroide asteroide;
 	private Alien alien;
 	private Nave nave;
+	private ArrayList<Tiro> tiros;
+	private ListaDeTiros listaDeTiros = new ListaDeTiros();
 
 	public Jogo() {
 
@@ -21,7 +27,8 @@ public class Jogo extends Observavel {
 		this.asteroide = new Asteroide(espaco, pd.obterRetanguloPadrao('m'));
 		this.alien = new Alien(espaco, pd.obterRetanguloPadrao('a'));
 		this.nave = new Nave(espaco, pd.obterRetanguloPadrao('n'));
-
+		this.tiros =  (ArrayList<Tiro>) ListaDeTiros.obterLista();
+		
 	}
 
 	public Alien alien() {
@@ -35,17 +42,22 @@ public class Jogo extends Observavel {
 	public Asteroide asteroide() {
 		return asteroide;
 	}
+	public ArrayList<Tiro> getTiros() {
+		return tiros;
+	}
 
 	public void receberTick() {
 
 		boolean alienAndou = alien.andarNaHorizontal();
 		boolean asteroideAndou = asteroide.andarNaVertical();
 
-		if (alienAndou == false) {
+		listaDeTiros.moverTiros();
+
+		if (!alienAndou) {
 			alien.resetarPosicaoY();
 		}
 
-		if (asteroideAndou == false) {
+		if (!asteroideAndou) {
 			asteroide.resetarPosicaoX();
 		}
 
