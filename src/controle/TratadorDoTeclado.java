@@ -8,19 +8,22 @@ import edugraf.jadix.fachada.ComponenteDix;
 import edugraf.jadix.fachada.PaginaDix;
 import edugraf.jadix.fachada.TratadorDixAbstrato;
 
-public class TratadorDoTeclado extends TratadorDixAbstrato  {
+public class TratadorDoTeclado extends TratadorDixAbstrato {
 
 	private Fachada fachada;
-
+	private ComponenteDix teclado;
+	
 	public TratadorDoTeclado(PaginaDix pag, Fachada fachada) {
 
 		this.fachada = fachada;
 
-		ComponenteDix teclado = pag.criarProcuradorDeComponente("teclado");
+		this.teclado = pag.criarProcuradorDeComponente("teclado");
 		teclado.adicionarTratadorDeEventos(this);
-		
-		
 
+	}
+	
+	public void desabilitar(){
+		teclado.desabilitar();
 	}
 
 	@Override
@@ -37,15 +40,8 @@ public class TratadorDoTeclado extends TratadorDixAbstrato  {
 				fachada.moverNaveNaVertical(-1);
 			if (tecla == 40)
 				fachada.moverNaveNaVertical(1);
-			
-			
-			if(tecla == 32)
-				fachada.atirarComANave();
-			
-				
 
 		}
-		
 
 	}
 

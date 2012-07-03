@@ -1,44 +1,38 @@
 package modelo;
 
-import modelo.geometria.Retangulo;
-import static modelo.constantes.Valores.*;
+import java.awt.Point;
 
-public class Alien extends RetanguloMovel {
+import modelo.util.Observavel;
+import modelo.util.TratadorDeInteiros;
+import static modelo.constantes.Medidas.*;
+import static modelo.constantes.Estado.*;
 
-	private final int PASSO = 1;
+public class Alien extends ObjetoMovel implements TipoQueExplode {
+
+	private final int PASSO = 5;
 
 	public Alien(Espaco espaco, Retangulo retangulo) {
 
 		this.espaco = espaco;
-		this.retangulo = retangulo;
-
-	}
-
-	public Retangulo retangulo() {
-		return retangulo;
-
-	}
-
-	public void resetarPosicaoY() {
-
-		retangulo.setLocation(POSICAOX_INICIAL_ALIEN.valor(),
-				POSICAOY_INICIAL_ALIEN.aleatoria(465));
-
-		notificarObservadores(toString());
-
+		this.corpo = retangulo;
+		this.observavel = new Observavel();
+		estado = VIVO;
 	}
 
 	public boolean andarNaHorizontal() {
-
-		boolean b = moverX(-PASSO);
-		notificarObservadores(toString());
-		return b;
+		return moverX(-PASSO);
 	}
 
-	public String toString() {
+	public void resetarPosicao() {
+		Point p = new Point(POSICAOX_INICIAL_ALIEN.valor(),
+				TratadorDeInteiros.retornarNmrAleatorio(465));
+		super.resetarPosicao(p);
+	}
 
-		return new String(retangulo.x + "/" + retangulo.y);
-
+	@Override
+	public void explodir() {
+		estado = COLIDIU;
+		observavel.notificarObservadores(toString());
 	}
 
 }

@@ -1,41 +1,41 @@
 package modelo;
 
-import modelo.geometria.Retangulo;
-import modelo.util.TratadorDeInteiros;
+import static modelo.constantes.PontosIniciais.PONTO_INICIAL_ASTEROIDE;
+import static modelo.constantes.Estado.*;
+import static modelo.constantes.Medidas.*;
 
-public class Asteroide extends RetanguloMovel {
+import java.awt.Point;
 
-	private final int PASSO = 1;
+import modelo.constantes.Estado;
+import modelo.util.Observavel;
+
+public class Asteroide extends ObjetoMovel implements TipoQueExplode {
+
+	private final int PASSO = 5;
 
 	public Asteroide(Espaco espaco, Retangulo retangulo) {
 		this.espaco = espaco;
-		this.retangulo = retangulo;
-	}
-
-	public Retangulo retangulo() {
-		return retangulo;
-
-	}
-
-	public void resetarPosicaoX() {
-
-		int r2 = TratadorDeInteiros.retornarNmrAleatorio(465);
-		retangulo.setLocation(r2, 0);
-
-		notificarObservadores(toString());
-
+		this.corpo = retangulo;
+		this.observavel = new Observavel();
+		estado = VIVO;
 	}
 
 	public boolean andarNaVertical() {
-
-		boolean b = moverY( PASSO);
-		notificarObservadores(toString());
-		return b;
+		return moverY(PASSO);
 	}
 
-	public String toString() {
+	public void resetarPosicao() {
+		Point p = new Point(POSICAOX_INICIAL_ASTEROIDE.aleatoria(465),
+				POSICAOY_INICIAL_ASTEROIDE.valor());
 
-		return new String(retangulo.x + "/" + retangulo.y);
+		super.resetarPosicao(p);
+
+	}
+
+	@Override
+	public void explodir() {
+		estado = COLIDIU;
+		observavel.notificarObservadores(toString());
 
 	}
 

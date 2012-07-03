@@ -1,71 +1,57 @@
 package modelo;
 
+import static modelo.constantes.RetangulosIniciais.*;
+
+import static modelo.constantes.PontosIniciais.*;
+import static modelo.constantes.Medidas.*;
 import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Point;
 
 import javax.swing.JOptionPane;
 
-import modelo.constantes.PontosDimensoes;
-import modelo.geometria.Retangulo;
 import modelo.util.Observavel;
 
-public class Jogo extends Observavel {
-
-	
-	private PontosDimensoes pd = new PontosDimensoes();
+public class Jogo {
 
 	private Asteroide asteroide;
 	private Alien alien;
 	private Nave nave;
-	private ArrayList<Tiro> tiros;
-	private ListaDeTiros listaDeTiros = new ListaDeTiros();
 
-	public Jogo() {
+	public Jogo(Asteroide asteroide, Alien alien, Nave nave) {
 
-		Espaco espaco = new Espaco(new Retangulo(new Dimension(500, 500)));
-		this.asteroide = new Asteroide(espaco, pd.obterRetanguloPadrao('m'));
-		this.alien = new Alien(espaco, pd.obterRetanguloPadrao('a'));
-		this.nave = new Nave(espaco, pd.obterRetanguloPadrao('n'));
-		this.tiros =  (ArrayList<Tiro>) ListaDeTiros.obterLista();
-		
+		this.alien = alien;
+		this.asteroide = asteroide;
+		this.nave = nave;
+
 	}
 
-	public Alien alien() {
-		return alien;
-	}
-
-	public Nave nave() {
-		return nave;
-	}
-
-	public Asteroide asteroide() {
-		return asteroide;
-	}
-	public ArrayList<Tiro> getTiros() {
-		return tiros;
-	}
-
-	public void receberTick() {
+	public boolean receberTick() {
 
 		boolean alienAndou = alien.andarNaHorizontal();
 		boolean asteroideAndou = asteroide.andarNaVertical();
 
-		listaDeTiros.moverTiros();
-
 		if (!alienAndou) {
-			alien.resetarPosicaoY();
+			alien.resetarPosicao();
 		}
 
 		if (!asteroideAndou) {
-			asteroide.resetarPosicaoX();
+			asteroide.resetarPosicao();
 		}
 
-		if (nave.intersecciona(alien.retangulo())
-				|| nave.intersecciona(asteroide.retangulo())) {
+		if (nave.intersecciona(alien)) {
 			nave.explodir();
+			alien.explodir();
+			return false;
+
 		}
 
+		if (nave.intersecciona(asteroide)) {
+			nave.explodir();
+			asteroide.explodir();
+			return false;
+		}
+
+		return true;
 	}
 
 }

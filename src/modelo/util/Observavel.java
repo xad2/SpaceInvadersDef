@@ -1,22 +1,18 @@
 package modelo.util;
 
+import javax.swing.JOptionPane;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Observavel implements TipoObservavel {
 
-public abstract class Observavel {
-	
-	
-	private List<Observador> observadores = new ArrayList<Observador>();
-	
-	
+	private ListaDeObservadores observadores = new ListaDeObservadores();
+
 	public void adicionarObservador(Observador o) {
-		observadores.add(o);
+		observadores.adicionar(o);
+
 	}
-	
-	
+
 	public void notificarObservadores(String argumento) {
-		for (Observador obs : observadores) {
+		for (Observador obs : observadores.obterLista()) {
 			obs.atualizar(argumento);
 		}
 	}
